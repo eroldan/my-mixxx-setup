@@ -1,0 +1,76 @@
+---
+
+- hosts: all
+  vars:
+    some: value
+
+
+  tasks:
+    - name: copy the mixxx startup script (dj.sh)
+      copy:
+        src: dj.sh
+        dest: /usr/local/bin/dj.sh
+        mode: "755"
+
+    - name: copy the alsa configuration for root user
+      copy:
+        src: .asoundrc
+        dest: /root/.asoundrc
+        mode: "644"
+
+    - name: disable screen blanking
+      copy:
+        src: 10-blanking.conf
+        dest: /etc/X11/xorg.conf.d/
+
+    - name: install mixxx
+      apt:
+        name: mixxx=2.2.0~dfsg-1
+        state: present
+
+    - name: remove pulseadio
+      apt:
+        name: pulseaudio
+        state: absent
+
+    - name: remove Alsa plugins
+      apt:
+        name: libasound2-plugins
+        state: absent
+
+    - name: copy mixxx configuration
+      copy:
+        src: dot-mixxx/
+        dest: /root/.mixxx/
+
+    - name: autostart mixx on boot
+      copy:
+        src: mixxx.desktop
+        dest: /etc/xdg/autostart/
+
+    - name: remove security warning at graphical startup
+      file:
+        path: /etc/xdg/autostart/pprompt.dektop
+        state: absent
+
+    - name: install on-screen keyboard
+      apt:
+        name: matchbox-keyboard
+        state: present
+
+    - name: install support for Windows filesystems for pendrives
+      apt:
+        pkg:
+          - exfat-utils
+          - ntfs-3g
+        state: present
+
+    - name: Disable default audio device
+      lineinfile:
+        path: /boot/config.txt
+        regexp: ^dtparam=audio=on$
+        line: dtparam=audio=off
+
+    - name: Finally reboot the machine
+      reboot:
+

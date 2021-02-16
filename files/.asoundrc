@@ -1,0 +1,48 @@
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Native Instruments :: Traktor Audio 2 ALSA Configuration
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+pcm.djA {
+  type plug;
+  slave {
+    pcm "hw:Audio2DJ,0,0"
+    rate 44100
+    channels 2
+    format S24_3BE
+  }
+}
+
+pcm.djB {
+  type plug;
+  slave {
+    pcm "hw:Audio2DJ,0,1"
+    rate 44100
+    channels 2
+    format S24_3BE
+  }
+}
+
+pcm.djAB {
+  type plug;
+  slave {
+    format S24_3BE
+    pcm {
+      type multi
+
+      slaves.a.pcm djA
+      slaves.a.channels 2
+      slaves.b.pcm djB
+      slaves.b.channels 2
+
+      bindings.0.slave a
+      bindings.0.channel 0
+      bindings.1.slave a
+      bindings.1.channel 1
+      bindings.2.slave b
+      bindings.2.channel 0
+      bindings.3.slave b
+      bindings.3.channel 1
+    }
+  }
+}
+

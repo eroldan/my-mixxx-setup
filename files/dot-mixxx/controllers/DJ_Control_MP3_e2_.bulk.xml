@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<MixxxControllerPreset schemaVersion="1" mixxxVersion="1.11+">
+    <info>
+        <name>Hercules DJ Control MP3 e2 / MP3 LE / Glow</name>
+        <author>Neale Pickett</author>
+        <description>Hercules DJ Control MP3 e2 / MP3 LE / Glow mapping. These three controllers have identical controls and share the same mapping.</description>
+    </info>
+    <controller id="DJ">
+        <scriptfiles>
+            <file functionprefix="" filename="common-bulk-midi.js"/>
+            <file functionprefix="" filename="Hercules DJ Control MP3 e2-scripts.js"/>
+            <file functionprefix="MP3e2" filename="Hercules-mp3e2-compat.js"/>
+        </scriptfiles>
+    </controller>
+</MixxxControllerPreset>

@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Mixx
+Comment=Start Mixxx on login
+Exec=/usr/local/bin/dj.sh
